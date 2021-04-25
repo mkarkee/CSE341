@@ -1,3 +1,4 @@
+fs = require('fs')
 const requestHandler = (req, res) => {
     const url = req.url;
     if (url === '/') {
@@ -9,10 +10,19 @@ const requestHandler = (req, res) => {
         res.end();
     }
     if (url === '/users'){
+        const file_data = fs.readFileSync('users.txt', 'utf8');
+        const users = file_data.trim().split('\n');
+        console.log(users);
         res.setHeader('Content-Type', 'text/html');
         res.write('<html>');
         res.write('<head><title>Prove 01</title></head>');
-        res.write('<body><ul><li>User 1</li><li>User 2</li></ul></body>');
+        res.write('<body><ul>');
+        for (var i=0; i < users.length; i++) {
+            res.write('<li>');
+            res.write(users[i]);
+            res.write('</li>');
+        }
+        res.write('</ul></body>');
         res.write('</html>');
         res.end();
     }
@@ -24,7 +34,10 @@ const requestHandler = (req, res) => {
         });
         req.on('end', () => {
             const parsedBody = Buffer.concat(body).toString();
-            console.log(parsedBody.split('=')[1]);
+            const username = parsedBody.split('=')[1];
+            console.log(username);
+            fs.appendFileSync('users.txt', '\n' + username);
+            
         });
         res.statusCode = 302;
         res.setHeader('Location', '/');
