@@ -2,6 +2,7 @@
 <html>
 <head>
   <% include ../includes/header.ejs %>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/prove02.css" />
 </head>
 
 <body>
@@ -12,13 +13,13 @@
     
   </div>
 </div>
-<div class="container">
+<div class="form">
     <form action="/prove02/display-book" method="POST">
-        <label for="book_title">Enter the book name:</label>
+        <label for="book_title">Enter a book name</label>
         <input type="text" name="book_title" id="book_title"> <br>
-        <label for="summary">Enter the Summary</label>
-        <input type="text" name="summary" id="summary"><br>
-        <button type="submit">Send</button>
+        <label for="summary">Enter the book summary</label>
+        <textarea name="summary" id="summary"> </textarea><br>
+        <button type="submit" class="submitbutton">Add Book</button>
     </form>
 </div>
 
