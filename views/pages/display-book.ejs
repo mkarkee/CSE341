@@ -2,22 +2,44 @@
 <html>
 <head>
   <% include ../includes/header.ejs %>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/display.css" />
 </head>
 
 <body>
   <% include ../includes/nav.ejs %>
 <div class="jumbotron text-center">
   <div class="container">
-    <h1><%= title %></h1>
+    <h1>Books</h1>
     
   </div>
 </div>
 <div class="container">
-    <p>
-      <%= summary %>
-    </p>
+  <div class = "books-container">
+    <div>
+      <h3 class="title"><%=title %></h3>
+      <p class="summary"><%=summary %></p>
+    </div>
+
+    <% booklist.forEach(item => { %>
+      <div>
+        <h3 class="title"><%=item.book_title %></h3>
+        <p class="summary"><%=item.summary %></p>
+      </div>
+      <% }) %>
+  </div>
+  
+
 </div>
 
 
 </body>
+<script>
+  //script for setting random colors
+  titles = document.getElementsByClassName("title");
+  for(i=0; i < titles.length; i++) {
+    var randomColor = Math.floor(Math.random()*16777215).toString(16);
+    titles[i].style.backgroundColor = '#' + randomColor;
+  }
+  
+</script>
 </html>

@@ -2,7 +2,6 @@ const express = require('express');
 const fs = require('fs');
 const router = express.Router();
 
-const books = [];
 function loadJSON(filename = ''){
     if(fs.existsSync(filename)) {
         return JSON.parse(fs.readFileSync(filename).toString());
@@ -27,16 +26,20 @@ router.get('/', (req, res, next) => {
 router.post('/display-book', (req, res, next) => {
     const book = JSON.stringify(req.body, null, 2);
     const data = loadJSON('books.json');
-    
+    const books = [...data];
+
     data.push(req.body);
+    
     saveJSON('books.json', data)
     
     res.render('pages/display-book', {
         title: req.body.book_title,
         summary: req.body.summary,
+        booklist: books,
         path: '/display-book'
         
     });
 });
 
-module.exports = router;
+exports.routes = router;
+
