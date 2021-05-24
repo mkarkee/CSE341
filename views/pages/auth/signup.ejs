@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <link rel="stylesheet" type="text/css" href="/stylesheets/prove02.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/display.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/shop-nav-bar.css" />
+</head>
+
+<body>
+<%- include('../../includes/shop-nav-bar.ejs') %>
+<div class="jumbotron text-center">
+  <div class="container">
+
+    
+  </div>
+</div>
+<div class="form">
+    <form action="/signup" method="POST">
+        <label for="email">E-Mail</label>
+        <input type="text" name="email" id="email"> <br>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password"> <br>
+        <label for="password">Confirm Password</label>
+        <input type="password" name="passwordConfirm" id="passwordConfirm"> <br>
+        <button type="submit" class="submitbutton">SignUp</button>
+    </form>
+</div>
+
+</body>
+</html>

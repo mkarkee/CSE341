@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <link rel="stylesheet" type="text/css" href="/stylesheets/prove02.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/display.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/shop-nav-bar.css" />
+</head>
+
+<body>
+<%- include('../../includes/shop-nav-bar.ejs') %>
+<div class="jumbotron text-center">
+  <div class="container">
+    <h1><%= title %></h1>
+    
+  </div>
+</div>
+<div class="form">
+    <form action="/admin/add-product" method="POST">
+        <label for="book_title">Enter a book name</label>
+        <input type="text" name="title" id="book_title"> <br>
+        <label for="price">Enter the price</label>
+        <input type="text" name="price" id="price"> <br>
+        <label for="summary">Enter the book summary</label>
+        <textarea name="description" id="summary"> </textarea><br>
+        <button type="submit" class="submitbutton">Add Book</button>
+    </form>
+</div>
+
+</body>
+</html>

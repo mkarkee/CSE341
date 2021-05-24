@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <% include ../includes/header.ejs %>
   <link rel="stylesheet" type="text/css" href="/stylesheets/display.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/shop-nav-bar.css" />
 </head>
 
 <body>
-  <% include ../includes/nav.ejs %>
+<%- include('../../includes/shop-nav-bar.ejs') %>
 <div class="jumbotron text-center">
   <div class="container">
-    <h1>Your Book "<%=title %>" has been added.</h1>
+    <h1>Your Book has been added.</h1>
     <u><a href="/prove02" style="color: white;">Click here to add more books.</a></u>
   </div>
 </div>
@@ -17,16 +17,21 @@
 <div class="container">
   
   <div class = "books-container">
-    <div>
-      <h3 class="title"><%=title %></h3>
-      <p class="summary"><%=summary %></p>
-    </div>
 
-    <% booklist.forEach(item => { %>
+    <% prods.forEach(item => { %>
       <div>
-        <h3 class="title"><%=item.book_title %></h3>
-        <p class="summary"><%=item.summary %></p>
+        <h3 class="title"><%=item.title %></h3>
+        <p class="summary"><%=item.description %></p>
+        <div class="card-actions" >
+          <form action="/admin/delete-product" method="POST">
+            <input type="hidden" value="<%= item._id %>" name="productId">
+            <button class="btn">Delete</button>
+          </form>
+          <a href="/admin/edit-product/<%= item._id %>" class="btn">Edit</a>
+          
+          </div>
       </div>
+      
       <% }) %>
   </div>
   

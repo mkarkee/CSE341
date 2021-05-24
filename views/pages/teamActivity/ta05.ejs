@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <% if(style == "Red Theme") { %>
+      <link rel="stylesheet" href="/stylesheets/red.css">
+    <% } %>
+
+    <% if(style == "Green Theme") { %>
+      <link rel="stylesheet" href="/stylesheets/green.css">
+    <% } %>
+
+    <% if(style == "Blue Theme") { %>
+      <link rel="stylesheet" href="/stylesheets/blue.css">
+    <% } %>
+    
+</head>
+
+    
+<body>
+    <div>
+      <h1>Theme </h1>
+        <form action="/ta05/theme" method="POST">
+          <label for='theme'>Select your theme</label>
+          <select id="theme" name="theme">
+            <option >
+              Red Theme
+            </option>
+            <option>
+              Green Theme
+            </option>
+            <option>
+              Blue Theme
+            </option>
+          </select>
+          <button type="submit">Change!</button>
+        </form>
+    </div>
+
+    <div>
+      <h1>Counter</h1>
+      <form action="/ta05/counter" method="POST">
+        <p><%=counterValue %></p>
+        <button type="submit">Increase Counter</button>
+      </form>
+    </div>
+    <br>
+    <br>
+    <div>
+      <h1>Reset</h1>
+      <form action="/ta05/reset" method="POST">
+        <button type="submit">Reset Session</button>
+      </form>
+    </div>
+</body>
+</html>
+
+
+
+
+</body>
+</html>

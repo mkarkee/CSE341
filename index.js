@@ -14,37 +14,50 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const User = require("./model/user");
 const PORT = process.env.PORT || 5000 // So we can run on heroku || (OR) localhost:5000
+const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
+const mongoose = require('mongoose');
+
+const MONGODB_URI = 'mongodb+srv://testUser:appleball@cluster0.lrjnz.mongodb.net/shop';
 const app = express();
+const store = new MongoDBStore({
+  uri: MONGODB_URI,
+  collection: 'sessions'
+});
+const routes = require('./routes');
+const { userInfo } = require('os');
 
-// Route setup. You can implement more in the future!
-const ta01Routes = require('./routes/ta01');
-const ta02Routes = require('./routes/ta02');
-const ta03Routes = require('./routes/ta03'); 
-const ta04Routes = require('./routes/ta04'); 
-const prove02data = require('./routes/prove02');
 
-app.use(express.static(path.join(__dirname, 'public')))
-   .set('views', path.join(__dirname, 'views'))
-   .set('view engine', 'ejs')
-   // For view engine as Pug
-   //.set('view engine', 'pug') // For view engine as PUG. 
-   // For view engine as hbs (Handlebars)
-   //.engine('hbs', expressHbs({layoutsDir: 'views/layouts/', defaultLayout: 'main-layout', extname: 'hbs'})) // For handlebars
-   //.set('view engine', 'hbs')
-   .use(bodyParser({extended: false})) // For parsing the body of a POST
-   .use('/ta01', ta01Routes)
-   .use('/ta02', ta02Routes) 
-   .use('/ta03', ta03Routes) 
-   .use('/ta04', ta04Routes)
-   .use('/prove02', prove02data.routes)
-   .get('/', (req, res, next) => {
-     // This is the primary index, always handled last. 
-     res.render('pages/index', {title: 'Welcome to my CSE341 repo', path: '/'});
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({secret: 'my secret', resave: false, saveUninitialized: false, store: store}));
+
+app.use((req, res, next) => {
+  User.findById('60ac0db83fda4665283c311d')
+    .then(user => {
+      req.user = user;
+      next();
     })
-   .use((req, res, next) => {
-     // 404 page
-     res.render('pages/404', {title: '404 - Page Not Found', path: req.url})
-   })
-   .listen(PORT, () => console.log(`Listening on ${ PORT }`));
+    .catch(err=> console.log(err)); 
+});
+
+app.use(bodyParser({extended: false})); // For parsing the body of a POST
+
+
+app.use('/', routes);
+
+
+mongoose.connect(MONGODB_URI)
+        .then(result => {
+          app.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+
