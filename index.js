@@ -37,14 +37,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({secret: 'my secret', resave: false, saveUninitialized: false, store: store}));
 
-// app.use((req, res, next) => {
-//   User.findById('60ac0db83fda4665283c311d')
-//     .then(user => {
-//       req.user = user;
-//       next();
-//     })
-//     .catch(err=> console.log(err)); 
-// });
+app.use((req, res, next) => {
+  User.findById('60ac0db83fda4665283c311d')
+    .then(user => {
+      req.user = user;
+      next();
+    })
+    .catch(err=> console.log(err)); 
+});
 
 app.use(bodyParser({extended: false})); // For parsing the body of a POST
 
