@@ -8,7 +8,7 @@ exports.getProducts = (req,res,next) => {
                 prods: products,
                 pageTitle: 'All Products',
                 path: '/products',
-                isAutheticated: req.isLoggedIn
+                isAutheticated: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -22,7 +22,7 @@ exports.getProduct = (req, res, next) => {
         res.render('./pages/shop/product-detail', {
             item: product,
             path: '/products',
-            isAutheticated: req.isLoggedIn
+            isAutheticated: req.session.isLoggedIn
         });
     })
     .catch(err => console.log(err));

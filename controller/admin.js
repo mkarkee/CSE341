@@ -4,8 +4,8 @@ const mongodb = require("mongodb");
 exports.getAddProduct = (req, res , next) => {
     res.render('./pages/admin/add-product', {
         title: 'Add Product',
-        path:'/admin/add-product',
-        isAutheticated: req.isLoggedIn
+        path:'/add-product',
+        isAutheticated: req.session.isLoggedIn
     });
 };
 
@@ -18,7 +18,7 @@ exports.postAddProduct = (req, res, next) => {
     const price = req.body.price;
     const description = req.body.description;
 
-    const product = new Product({title: title, price: price, imageUrl: imageUrl, description: description, userId: req.user});
+    const product = new Product({title: title, price: price, imageUrl: imageUrl, description: description, userId: req.session.user});
     product
         .save()
         .then(result => {
@@ -26,7 +26,7 @@ exports.postAddProduct = (req, res, next) => {
             res.render('./pages/admin/add-product', {
                 title: 'Add Product',
                 path: '/admin/add-product',
-                isAutheticated: req.isLoggedIn
+                isAutheticated: req.session.isLoggedIn
             });
         })
         .catch(err=> {
@@ -41,7 +41,7 @@ exports.getProductlist = (req,res,next) => {
                 prods: products,
                 pageTitle: 'All Products',
                 path: '/products',
-                isAutheticated: req.isLoggedIn
+                isAutheticated: req.session.isLoggedIn
             });
         })
         .catch(err => {
@@ -60,7 +60,7 @@ exports.getEditProduct = (req, res, next) => {
         res.render('./pages/admin/edit-product', {
             item: product,
             path: '/admin/edit-product',
-            isAutheticated: req.isLoggedIn
+            isAutheticated: req.session.isLoggedIn
         });
     })
     .catch(err => console.log(err));

@@ -18,10 +18,12 @@
         <h3 class="title"><%=item.title %></h3>
         <p class="summary"><%=item.description %></p>
         <a href="/prove/products/<%= item._id %>" class="btn">Details</a>
-        <form action="/prove/cart" method="POST">
-          <button class="btn">Add to Cart</button>
-          <input type="hidden" name="productId" value="<%= item.id %>">
-        </form>
+        <% if(isAutheticated) { %>
+          <form action="/prove/cart" method="POST">
+            <button class="btn">Add to Cart</button>
+            <input type="hidden" name="productId" value="<%= item.id %>">
+          </form>
+        <% } %>
         
       </div>
       <% }) %>

@@ -72,3 +72,9 @@ exports.postSignup = (req, res, next) => {
             console.log(err);
         });
 };
+
+exports.postLogout = (req, res, next) => {
+  req.session.destroy(() => {
+      res.redirect('/prove/products');
+  });
+};

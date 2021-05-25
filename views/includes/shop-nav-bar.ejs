@@ -9,13 +9,14 @@
             <li class="main-header__item">
                 <a class="<%= path === '/products' ? 'active' : '' %>" href="/prove/products">Products</a>
             </li>
+            <% if(isAutheticated) { %>
             <li class="main-header__item">
                 <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
             </li>
             <li class="main-header__item">
                 <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
             </li>
-            <% if(isAutheticated) { %>
+            
            <li class="main-header__item">
                 <a class="<%= path === '/prove/add-product' ? 'active' : '' %>" href="/admin/add-product">Add Product
                 </a>
@@ -27,12 +28,20 @@
             <% } %>
         </ul>
         <ul class="main-header__item-list">
-            <li class="main-header__item">
-                <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
-            </li>
-            <li class="main-header__item">
-                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
-            </li>
+            <% if(!isAutheticated) { %>
+                <li class="main-header__item">
+                    <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+                </li>
+            <% } else {%>
+                <li class="main-header__item">
+                    <form action="/logout" method="POST">
+                        <button type="submit">logout</button>
+                    </form>
+                </li>
+            <% } %>
         </ul>
     </nav>
 </header>
