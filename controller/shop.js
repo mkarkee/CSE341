@@ -34,3 +34,11 @@ exports.postCart = (req, res, next) => {
     console.log(prodId);
     res.redirect('/');
 };
+
+exports.getCart = (req, res, next) => {
+    res.render('./pages/shop/cart', {
+        path: '/cart',
+        isAutheticated: req.session.isLoggedIn
+    });
+
+};
