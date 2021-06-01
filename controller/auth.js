@@ -3,15 +3,20 @@ const User = require('../model/user');
 const bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res, next) => {
+    let email = "Not logged in";
+    if(req.session.email){
+        email = req.session.email;
+    }
     res.render('./pages/auth/login', {
         path:'/login',
         pageTitle: 'Login',
-        isAutheticated: req.isLoggedIn
+        isAutheticated: false,
+        useremail: email
     });
 };
 
 exports.postLogin = (req, res, next) => {
-    const email = req.body.email;
+    let email = req.body.email;
     const password = req.body.password;
     User.findOne({email: email})
         .then(user => {
@@ -23,6 +28,7 @@ exports.postLogin = (req, res, next) => {
                     if(doMatch) {
                         req.session.isLoggedIn = true;
                         req.session.user = user;
+                        req.session.email = email;
                         return req.session.save(err => {
                             console.log(err);
                             res.redirect('/prove/products');
@@ -38,15 +44,20 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.getSignup = (req, res, next) => {
+    let email = "Not logged in";
+    if(req.session.email){
+        email = req.session.email;
+    }
     res.render('./pages/auth/signup', {
         path:'/signup',
         pageTitle: 'Sign-UP',
-        isAutheticated: false
+        isAutheticated: false,
+        useremail: email
     });
 };
 
 exports.postSignup = (req, res, next) => {
-    const email = req.body.email;
+    let email = req.body.email;
     const password = req.body.password;
     User
         .findOne({email: email})

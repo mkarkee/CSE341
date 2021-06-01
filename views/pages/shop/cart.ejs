@@ -8,7 +8,43 @@
 <body>
 <%- include('../../includes/shop-nav-bar.ejs') %>
 
-<br>
-<br>
-<br>
-<h1>Cart under Development</h1>
+
+<div class="container">
+  
+  <div class = "books-container">
+
+    <% products.forEach(item => { %>
+      <div> 
+        <h3 class="title"><%=item.productId.title %></h3>
+        <p class="summary"><%=item.description %></p>
+        <h>Quantity:</h><h><%=item.quantity %></h><br>
+        <!-- <a href="/prove/products/<%= item._id %>" class="btn">Details</a> -->
+        <form action="/prove/cart-delete-item" method="POST">
+          <button class="btn">Delete</button>
+          <input type="hidden" name="productId" value="<%=item._id %>">
+        </form>
+      </div>
+      <% }) %>
+  </div>
+  
+
+</div>
+
+
+</body>
+<script>
+  //script for setting random colors
+  titles = document.getElementsByClassName("title");
+  summaries = document.getElementsByClassName('summary');
+  for(i=0; i < titles.length; i++) {
+    var randomColor ='#' + Math.floor(Math.random()*16777215).toString(16);
+    if(randomColor == '#ffffff') {
+      randomColor = '#000000';
+    }
+    titles[i].style.backgroundColor = randomColor;
+    titles[i].style.borderColor = randomColor;
+    summaries[i].style.borderColor = randomColor;
+  }
+  
+</script>
+</html>

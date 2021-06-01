@@ -5,7 +5,8 @@ exports.getAddProduct = (req, res , next) => {
     res.render('./pages/admin/add-product', {
         title: 'Add Product',
         path:'/add-product',
-        isAutheticated: req.session.isLoggedIn
+        isAutheticated: req.session.isLoggedIn,
+        useremail: req.session.email
     });
 };
 
@@ -17,8 +18,13 @@ exports.postAddProduct = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const price = req.body.price;
     const description = req.body.description;
+    const quantity = req.body.quantity;
+    let email = "Not logged in";
+    if(req.session.email){
+        email = req.session.email;
+    }
 
-    const product = new Product({title: title, price: price, imageUrl: imageUrl, description: description, userId: req.session.user});
+    const product = new Product({title: title, price: price, imageUrl: imageUrl, description: description, userId: req.session.user, quantity: quantity});
     product
         .save()
         .then(result => {
@@ -26,7 +32,9 @@ exports.postAddProduct = (req, res, next) => {
             res.render('./pages/admin/add-product', {
                 title: 'Add Product',
                 path: '/admin/add-product',
-                isAutheticated: req.session.isLoggedIn
+                isAutheticated: req.session.isLoggedIn,
+                useremail: email
+                
             });
         })
         .catch(err=> {
@@ -35,13 +43,18 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getProductlist = (req,res,next) => {
+    let email = "Not logged in";
+    if(req.session.email){
+        email = req.session.email;
+    }
     Product.find()
         .then(products => {
             res.render('./pages/admin/product-list', {
                 prods: products,
                 pageTitle: 'All Products',
                 path: '/products',
-                isAutheticated: req.session.isLoggedIn
+                isAutheticated: req.session.isLoggedIn,
+                useremail: email
             });
         })
         .catch(err => {
@@ -51,6 +64,10 @@ exports.getProductlist = (req,res,next) => {
 };
 
 exports.getEditProduct = (req, res, next) => {
+    let email = "Not logged in";
+    if(req.session.email){
+        email = req.session.email;
+    }
     const prodId = req.params.productId;
     Product.findById(prodId)
     .then(product=> {
@@ -60,7 +77,8 @@ exports.getEditProduct = (req, res, next) => {
         res.render('./pages/admin/edit-product', {
             item: product,
             path: '/admin/edit-product',
-            isAutheticated: req.session.isLoggedIn
+            isAutheticated: req.session.isLoggedIn,
+            useremail: email
         });
     })
     .catch(err => console.log(err));
