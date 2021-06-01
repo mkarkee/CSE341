@@ -9,29 +9,25 @@
 <%- include('../../includes/shop-nav-bar.ejs') %>
 
 
-<div class="container">
-  
-  <div class = "books-container">
-
-    <% products.forEach(item => { %>
-      <div> 
-        <h3 class="title"><%=item.productId.title %></h3>
-        <p class="summary"><%=item.description %></p>
-        <h>Quantity:</h><h><%=item.quantity %></h><br>
-        <!-- <a href="/prove/products/<%= item._id %>" class="btn">Details</a> -->
-        <form action="/prove/cart-delete-item" method="POST">
-          <button class="btn">Delete</button>
-          <input type="hidden" name="productId" value="<%=item._id %>">
-        </form>
-        <form action="/prove/create-order" method="POST">
-          <button class="btn">Order Now</button>
-        </form>
-      </div>
-      <% }) %>
-  </div>
-  
-
-</div>
+<main>
+    <% if (orders.length <= 0) { %>
+        <h1>Nothing there!</h1>
+    <% } else { %>
+        <ul class="orders">
+            <% orders.forEach(order => { %>
+                <li class="orders__item">
+                    <h1>Order - # <%= order._id %></h1>
+                    <ul class="orders__products">
+                        <% order.products.forEach(p => { %>
+                           
+                            <li class="orders__products-item"><%= p._id.title %> (<%= p.quantity %>)</li>
+                        <% }); %>
+                    </ul>
+                </li>
+            <% }); %>
+        </ul>
+    <% } %>
+</main>
 
 
 </body>

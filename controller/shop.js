@@ -1,5 +1,6 @@
 
 const Product = require("../model/product");
+const Order = require('../model/order');
 
 exports.getProducts = (req,res,next) => {
     let email = "Not logged in";
@@ -78,4 +79,47 @@ exports.postCartDeleteProduct = (req, res, next) => {
             res.redirect('/prove/cart');
         })
         .catch(err=> console.log(err));
+};
+
+exports.postOrders = (req, res, next) => {
+    req.user
+        .populate('carts.items.productId')
+        .execPopulate()
+        .then(user=> {
+            const products = user.cart.items.map(i => {
+                return {quantity: i.quantity, product: {...i.productId._doc}}; 
+            })
+            const order = new Order({
+                user: { 
+                    name: req.user.email,
+                    userId: req.user
+                },
+                products: products
+            });
+            return order.save();
+        })
+        .then(result => {
+            return req.user.clearCart();    
+        })
+        .then( () => {
+            res.redirect('/prove/orders');
+        })
+        .catch(err => console.log(err));
+};
+
+exports.getOrders = (req, res, next) => {
+    let email = "Not logged in";
+    if(req.session.email){
+        email = req.session.email;
+    }
+    Order.find({'user.userId': req.user._id})
+        .then(orders => {
+            res.render('./pages/shop/orders', {
+                path: '/orders',
+                isAutheticated: req.session.isLoggedIn,
+                pageTitle: 'Your Orders',
+                orders: orders
+            });
+        })
+        .catch(err => console.log(err));
 };
