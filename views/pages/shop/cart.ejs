@@ -23,12 +23,13 @@
           <button class="btn">Delete</button>
           <input type="hidden" name="productId" value="<%=item._id %>">
         </form>
-        <form action="/prove/create-order" method="POST">
-          <button class="btn">Order Now</button>
-        </form>
+        
       </div>
       <% }) %>
   </div>
+  <form action="/prove/create-order" method="POST">
+    <button class="btn">Order Now</button>
+  </form>
   
 
 </div>

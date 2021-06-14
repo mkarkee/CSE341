@@ -83,28 +83,28 @@ exports.postCartDeleteProduct = (req, res, next) => {
 
 exports.postOrders = (req, res, next) => {
     req.user
-        .populate('carts.items.productId')
-        .execPopulate()
-        .then(user=> {
-            const products = user.cart.items.map(i => {
-                return {quantity: i.quantity, product: {...i.productId._doc}}; 
-            })
-            const order = new Order({
-                user: { 
-                    name: req.user.email,
-                    userId: req.user
-                },
-                products: products
-            });
-            return order.save();
-        })
-        .then(result => {
-            return req.user.clearCart();    
-        })
-        .then( () => {
-            res.redirect('/prove/orders');
-        })
-        .catch(err => console.log(err));
+      .populate('cart.items.productId')
+      .execPopulate()
+      .then(user => {
+        const products = user.cart.items.map(i => {
+          return { quantity: i.quantity, product: { ...i.productId._doc } };
+        });
+        const order = new Order({
+          user: {
+            email: req.user.email,
+            userId: req.user
+          },
+          products: products
+        });
+        return order.save();
+      })
+      .then(result => {
+        return req.user.clearCart();
+      })
+      .then(() => {
+        res.redirect('/prove/orders');
+      })
+      .catch(err => console.log(err));
 };
 
 exports.getOrders = (req, res, next) => {

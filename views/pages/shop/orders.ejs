@@ -9,6 +9,7 @@
 <%- include('../../includes/shop-nav-bar.ejs') %>
 
 
+
 <main>
     <% if (orders.length <= 0) { %>
         <h1>Nothing there!</h1>
@@ -20,7 +21,7 @@
                     <ul class="orders__products">
                         <% order.products.forEach(p => { %>
                            
-                            <li class="orders__products-item"><%= p._id.title %> (<%= p.quantity %>)</li>
+                            <li class="orders__products-item"><%=p.product.title%> (<%= p.quantity %>)</li>
                         <% }); %>
                     </ul>
                 </li>
