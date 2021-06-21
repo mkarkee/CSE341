@@ -4,6 +4,8 @@ const shopController = require('../../controller/shop');
 const isAuth = require('../../middleware/is-auth');
 
 const prove08Controller = require('../../controller/prove08');
+const prove09Controller = require('../../controller/prove09');
+
 
 const router = express.Router();
 
@@ -22,5 +24,9 @@ router.post('/create-order', isAuth, shopController.postOrders);
 router.get('/orders', isAuth, shopController.getOrders);
 router.get('/prove08', prove08Controller.processJson)
         .post('/', prove08Controller.getIndex);
+
+router.get('/prove09', prove09Controller.getProve09);
+        
+
 
 module.exports = router;
