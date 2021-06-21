@@ -42,7 +42,7 @@ ol {
   }
 
   button {
-    margin-left: 80px;
+    margin-left: 50px;
     line-height: 2em;
     background: #f9dd94;
     border: .3em solid #fff;
@@ -61,3 +61,13 @@ ol {
   h1{
     color: #866e31;
   }
+
+no {
+    margin-left: 30px;
+    color: #000000;
+    font-weight: bold;
+}
+
+#first {
+    margin-left: 20px;
+}

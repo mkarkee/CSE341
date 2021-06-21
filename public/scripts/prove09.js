@@ -1,24 +1,34 @@
 
-let prev = null // Setup placeholders for our next and prev links.
-let next = null
-let pageNumber = 0
 
-const pokeList = document.getElementById('pokemon') // Grab the appropriate html element
+let pageNumber = 0
+let prev = null 
+let next = null
+
+
+const pokeList = document.getElementById('pokemon')
+const page = document.getElementById('pageNumber') 
+const getFirstbtn = document.getElementById('first')
+getFirstbtn.style.visibility = 'hidden'
 
 const getData = async (url = '') => {
     const response = await fetch(url, {
-        // Await the response.
         method: 'GET'
     })
-    return response.json() // Wrap in a promise using JSON formatting.
+    return response.json() 
 }
 
-const populateList = url => {
-    const data = getData(url) // Make the request.
+const getList = url => {
+    const data = getData(url)
     clearList()
     pokeList.style.counterReset= "li " + pageNumber * 10;
+    page.innerHTML = pageNumber + 1;
 
-    // .then is used to access the response's promise
+    if(pageNumber > 0) {
+        getFirstbtn.style.visibility = 'visible'
+    } else {
+        getFirstbtn.style.visibility = 'hidden'
+    }
+   
     data.then(json => {
         for (const i in json.results) {
             pokeList.innerHTML += `<li>${json.results[i].name}</li>`
@@ -30,14 +40,14 @@ const populateList = url => {
 }
 
 const clearList = () => {
-    pokeList.innerHTML = '' // Clear list to prevent more than ten items listed.
+    pokeList.innerHTML = ''
 }
 
 const showNext = () => {
     
     if (next !== null) {
         pageNumber += 1;
-        populateList(next)
+       getList(next)
     } else {
         return
     }
@@ -48,12 +58,16 @@ const showPrevious = () => {
     
     if (prev !== null) {
         pageNumber -=1;
-        populateList(prev)
+        getList(prev)
     } else {
         return
     }
 }
 
-// Initialize data
-populateList('https://pokeapi.co/api/v2/pokemon?offset=0&limit=10');
+const showFirst = () => {
+    pageNumber = 0;
+    getList('https://pokeapi.co/api/v2/pokemon?offset=0&limit=10');
+}
+
+getList('https://pokeapi.co/api/v2/pokemon?offset=0&limit=10');
 
