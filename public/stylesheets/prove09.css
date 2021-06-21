@@ -3,7 +3,7 @@ div{
     margin-left: 30%;
 }
 ol {
-    counter-reset: li; 
+    counter-reset: li ; 
     list-style: none; 
     padding: 10;
     text-shadow: 0 1px 0 rgba(255,255,255,.5);
@@ -59,5 +59,5 @@ ol {
     border-radius: 2em;
   }
   h1{
-    color: #6b5c35;
+    color: #866e31;
   }

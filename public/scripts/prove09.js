@@ -1,6 +1,7 @@
 
 let prev = null // Setup placeholders for our next and prev links.
 let next = null
+let pageNumber = 0
 
 const pokeList = document.getElementById('pokemon') // Grab the appropriate html element
 
@@ -15,6 +16,7 @@ const getData = async (url = '') => {
 const populateList = url => {
     const data = getData(url) // Make the request.
     clearList()
+    pokeList.style.counterReset= "li " + pageNumber * 10;
 
     // .then is used to access the response's promise
     data.then(json => {
@@ -32,15 +34,20 @@ const clearList = () => {
 }
 
 const showNext = () => {
+    
     if (next !== null) {
+        pageNumber += 1;
         populateList(next)
     } else {
         return
     }
+    
 }
 
 const showPrevious = () => {
+    
     if (prev !== null) {
+        pageNumber -=1;
         populateList(prev)
     } else {
         return
