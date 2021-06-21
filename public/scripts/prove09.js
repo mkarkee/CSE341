@@ -10,6 +10,10 @@ const page = document.getElementById('pageNumber')
 const getFirstbtn = document.getElementById('first')
 getFirstbtn.style.visibility = 'hidden'
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
 const getData = async (url = '') => {
     const response = await fetch(url, {
         method: 'GET'
@@ -31,7 +35,7 @@ const getList = url => {
    
     data.then(json => {
         for (const i in json.results) {
-            pokeList.innerHTML += `<li>${json.results[i].name}</li>`
+            pokeList.innerHTML += `<li>${capitalizeFirstLetter(json.results[i].name)}</li>`
             next = json.next
             prev = json.previous
         }
