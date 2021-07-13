@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const users = ['admin']; // Dummy array for users
+const users = ['admin']; 
 
 router.get('/', (req, res, next) => {
   res.render('pages/pr12-login', {

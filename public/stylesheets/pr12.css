@@ -1,5 +1,42 @@
+.container {
+  height: 70vh;
+  width: 95%;
+}
+
+.container ul {
+  list-style: none;
+  width: 100%;
+  display: inline-block;
+}
+button{
+  
+  display: inline-block;
+  padding:0.3em 1.2em;
+  margin:0 0.3em 0.3em 0;
+  border-radius:2em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:300;
+  color:#FFFFFF;
+  background-color:#4eb5f1;
+  text-align:center;
+  transition: all 0.2s;
+};
+
+button:hover{
+  background-color:#4095c6;
+}
+
+@media all and (max-width:30em){
+   a.button{
+  display:block;
+  margin:0.2em auto;
+   }
+}
+
 ul.chat li.message {
-  border: solid #6d417e 0.5rem;
+  border: solid #dcdcdc 0.5rem;
   border-radius: 1rem;
   background-color: #f8f8ff;
   margin: 1rem 0 1rem 0;
@@ -9,26 +46,23 @@ ul.chat li.message {
 }
 
 ul.chat li.uMessage {
-  border: solid #0a850a 0.5rem;
+  border: solid #008000 0.5rem;
   margin-left: auto;
   background-color: #008000;
   color: #f8f8ff;
 }
 
 .input {
-  border: solid #0a850a 0.5rem;
-  margin-left: auto;
-  background-color: #008000;
-  color: #f8f8ff;
+  width: 30%;
+  margin: 0 auto 0 auto;
+  border-radius: 1rem;
+  padding: 0.5rem;
 }
 
 .input textarea {
-  border: solid #0a850a 0.5rem;
-  margin-left: auto;
-  background-color: #008000;
-  color: #f8f8ff;
-}
+  border: solid #000000 0.2rem;
+  border-radius: 1rem;
+  width: 75%;
+  height: 5rem;
 
-.displayname {
-  font-size: 1.5em;
 }
